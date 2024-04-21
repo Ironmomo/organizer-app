@@ -1,0 +1,73 @@
+/*
+Form
+*/
+
+.formContainer {
+    width: 90%;
+    max-width: 500px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.formTitle {
+    font-size: 1.2rem;
+    font-weight: 600;
+    opacity: 0.8;
+}
+
+.formCenter {
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.formItem {
+    margin-top: 20px;
+    font-weight: 600;
+    opacity: 0.8;
+}
+
+.formItem>label {
+    align-items: flex-start;
+}
+
+.formItem>label>textarea {
+    resize: none;
+    width: 200px;
+    min-height: 25px;
+    background-color: #3498db0e;
+    border: 2px solid transparent;
+    border-radius: 5px;
+}
+.formItem>label>textarea:hover {
+    background-color: #3498db1c;
+}
+.formItem>label>textarea:focus, .formItem>label>input:focus {
+    border: 2px solid;
+    background-color: #3498db1c;
+    border-color: #3498db3c;
+    box-shadow: #3498db2b 0px 0px 4px;
+    outline: none;
+}
+.formItem>label>input {
+    background-color: #3498db0e;
+    border: none;
+    border-radius: 5px;
+    min-height: 25px;
+    width: 200px;
+}
+.formItem>label>input:hover {
+    background-color: #3498db1c;
+}
+
+.formTaskDescription>label>textarea {
+    height: 80px;
+}
+
+.formFooter {
+    text-align: center;
+    margin-top: 40px;
+}
+

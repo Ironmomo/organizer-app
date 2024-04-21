@@ -1,95 +1,81 @@
-import Image from "next/image";
 import styles from "./page.module.css";
+import homeContent from "../locales/de/home.json"
+import Button from "@/components/Button/Button"
+import Link from "next/link";
+import { upcomingTasks } from "@/utils/request/ServerAction";
+import SQLDBManager from "@/db/Manager/SQLDBManager.mjs";
+import { revalidatePath } from "next/cache";
+import { MdDeleteOutline } from "react-icons/md"
+import { isInteger } from "@/utils/request/dataEvaluation.mjs";
+import RequestError from "@/utils/error/RequestError.mjs";
 
-export default function Home() {
+/**
+ * Home Page
+ *
+ * @description Server-side rendered page with navigation buttons and upcoming tasks display.
+ *              Allows users to delete upcoming tasks.
+ * @returns {JSX.Element} - Rendered Home page component.
+ */
+export default async function Home() {
+
+  const tasks = await upcomingTasks()
+
+  /**
+   * @function deleteTask
+   * @description Server action to delete a task. Receives formData containing the task ID.
+   *              Deletes the task with the given ID. Throws a RequestError if the ID is not valid.
+   *              After deletion, revalidates the path to update the UI.
+   * @param {FormData} formData - Form data containing an 'id' field with the task ID to delete.
+   */
+  async function deleteTask(formData) {
+    "use server"
+    const id = formData.get("id")
+    if (!isInteger(id)) throw new RequestError()
+    const dbm = new SQLDBManager()
+    await dbm.deleteTaskById(parseInt(id))
+    revalidatePath("/")
+  }
+
+
   return (
     <main className={styles.main}>
+      <div className={styles.title}>
+        <h1>
+          {homeContent.title}
+        </h1>
+      </div>
       <div className={styles.description}>
         <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
+          {homeContent.description}
         </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+        <div className={`${styles.buttoncontainer} flex-row`}>
+          <Link href="/calender" className={`popupItem`}>
+            <Button text={homeContent.calenderBtn}/>
+          </Link>
+          <Link href="/tasks/1" className={`popupItem`}>
+            <Button text={homeContent.taskBtn}/>
+          </Link>
         </div>
       </div>
 
       <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+          <h1 className={styles.centerTitle}>{homeContent.centerTitle}</h1>
+          {tasks.map(task => {
+            return (
+              <div key={task.id} className={`${styles.taskContainer} flex-row`}>
+                <div className={styles.taskTitle}>{task.title}</div>
+                <div>
+                  <form action={deleteTask}>
+                    <input type="text" name="id" hidden defaultValue={task.id}/>
+                    <button type='submit' className={styles.buttonWrap}>
+                        <MdDeleteOutline className={`${styles.deleteIcon} popupItem`}/>
+                    </button>
+                  </form>
+                </div>
+              </div>  
+            )
+          })}
       </div>
     </main>
-  );
+  )
 }

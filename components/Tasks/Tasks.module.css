@@ -1,0 +1,80 @@
+/*
+Task Boxes
+*/
+.taskContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 250px;
+    height: 250px;
+    margin: 10px;
+    padding: 5px;
+
+    border: 2px solid grey;
+    border-radius: 10px;
+
+    background-color: #3498db2b;
+    box-shadow: rgba(0, 0, 0, 0.3) 5px 5px 8px;
+
+    box-sizing: border-box;
+}
+.taskContainer:hover {
+    background-color: #3498db3c;
+}
+
+.taskHeader {
+    display: flex;
+    flex-direction: column;
+    height: 20%;
+    width: 100%;
+}
+
+.taskTitle {
+    font-size: 1.1rem;
+    font-weight: 600;
+    opacity: 0.9;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.taskDate {
+    margin-top: 5px;
+}
+
+.taskCenter {
+    width: 95%;
+    height: 60%;
+
+    overflow-x: hidden;
+    overflow-y: scroll;
+    text-overflow: ellipsis;
+    line-height: 1.5;
+
+    font-size: 0.9rem;
+}
+
+.taskFooter {
+    width: 80px;
+    height: 20%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.3rem;
+}
+
+.button {
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
+}
+
+.deleteIcon, .editIcon {
+    cursor: pointer;
+    color: black;
+}
+
+.deleteIcon:hover {
+    color: red;
+}

@@ -1,0 +1,30 @@
+/*
+SearchComponent
+*/
+.searchContainer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.searchIcon {
+    margin-left: 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+
+    opacity: 0.9;
+}
+
+.searchContainer>input {
+    width: 200px;
+    height: 25px;
+    background-color: #3498db20;
+    border: none;
+    border-radius: 5px;
+}
+
+.searchContainer>input:focus {
+    border-color: #3498db3c;
+    box-shadow: #3498db2b 0px 0px 4px;
+    outline: none;
+}
