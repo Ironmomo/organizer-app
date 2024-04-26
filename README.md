@@ -15,6 +15,7 @@ It is mandatory to setup a mysql database. To initialize use the following scrip
 To make it more easy for you set up a docker container with the following Dockerfile. Make shure to use the correct path to the init.sql script
 
 ```Dockerfile
+#Dockerfile
 # Use the official MySQL image as the base image
 FROM mysql
 
@@ -42,6 +43,7 @@ docker run --name mysql_organizer_container -d -p 3306:3306 mysql_organizer
 
 Create a .env.local file in the root directory
 ```
+#.env.local
 DB_USER=root
 DB_HOST=localhost
 DB_DATABASE=OrganizerDB
@@ -60,4 +62,23 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## About the Project
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Functionality
+
+### Implementation overview
+
+### Security concerns
+This project should only give a brief overlook about the way I structure a simple project and how I writte code. Therefore there are not many security implementations like authentications. 
+Nevertheless some basic Security Requirements have been defined:
+
+#### Security Requirements
+1. The web application must not directly access the underlying operating system
+
+2. Database access must be implemented securily to prevent SQL Injection Attacks
+
+3. All data recieved from user or the system are concedered un-trusted and therefore must be validated before processing it any further
+
+#### Threads
+1. 
+
+
+#### Security Design
