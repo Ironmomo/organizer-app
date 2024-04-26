@@ -45,10 +45,13 @@ export default function TaskForm({ params }) {
 
     const searchParams = useSearchParams()
 
+    const currentDate = new Date()
+    currentDate.setMinutes(Math.round(currentDate.getMinutes() / 5) * 5 )
+
     const [taskObject, setTaskObject] = useState({
         title: '',
         description: '',
-        date: new Date().toISOString().split(".")[0],
+        date: currentDate.toISOString().split(".")[0],
         id: ''
     })
 

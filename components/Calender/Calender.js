@@ -25,6 +25,7 @@ import DayBox from './DayBox'
 import { getDaysInMonth } from '@/utils/date.mjs'
 import ErrorComponent from '../Error/ErrorComponent'
 import Task from '@/model/Task.mjs'
+import sortArray from '@/utils/sorter.mjs'
 
 
 async function fetchGetTasks(month, year) {
@@ -124,7 +125,9 @@ export default function Calender({ date }) {
      * @param {Task} updatedTask
      */
     function updateTask(updatedTask) {
-        setTasks(tasks.map(task => task.id === updatedTask.id ? updatedTask : task))
+        const newTasks = tasks.map(task => task.id === updatedTask.id ? updatedTask : task)
+        const sortedTasks = sortArray(newTasks, (a,b) => a.date - b.date)
+        setTasks(sortedTasks)
         fetchUpdateTask(updatedTask)
         .catch(errMsg => setError(<ErrorComponent message={errMsg} reset={() => {setError(null); updateTask(updatedTask)}}/>))
     }

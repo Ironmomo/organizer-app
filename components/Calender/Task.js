@@ -82,7 +82,7 @@ export default function Task({ task, updateTask, deleteTask }) {
       <div className={styles.openTaskFooter}>
         <div className={`${styles.buttonContainer} flex-row`}>
             <Button onClick={() => {setTime(); setOpen(false)}} text={'Save'}/>
-            <MdDeleteOutline className={`${styles.deleteIcon} popupItem`} onClick={() => deleteTask(task.id)}/>
+            <MdDeleteOutline className={`${styles.deleteIcon} popupItem`} onClick={() => {setOpen(false); deleteTask(task.id)}}/>
         </div>
       </div>
     </div>
