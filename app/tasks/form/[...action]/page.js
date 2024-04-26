@@ -32,6 +32,15 @@ async function fetchGetTask(id) {
     })
 }
 
+function formatDate(date) {
+    const year = date.getFullYear()
+    const month = String(date.getMonth() + 1).padStart(2, '0')
+    const day = String(date.getDate()).padStart(2, '0')
+    const hour = String(date.getHours()).padStart(2, '0')
+    const min = String(date.getMinutes()).padStart(2, '0')
+    return `${year}-${month}-${day}T${hour}:${min}`
+}
+
 /**
  * TaskForm
  *
@@ -45,16 +54,12 @@ export default function TaskForm({ params }) {
 
     const searchParams = useSearchParams()
 
-    const currentDate = new Date()
-    currentDate.setMinutes(Math.round(currentDate.getMinutes() / 5) * 5 )
-
     const [taskObject, setTaskObject] = useState({
-        title: '',
-        description: '',
-        date: currentDate.toISOString().split(".")[0],
-        id: ''
-    })
-
+                                                    title: '',
+                                                    description: '',
+                                                    date: formatDate(new Date()),
+                                                    id: ''
+                                                })
     const [error, setError] = useState(null)
 
     /**
@@ -66,14 +71,13 @@ export default function TaskForm({ params }) {
         const id = searchParams.get('id')
         if(id) {
             fetchGetTask(id)
-            .then(data => setTaskObject({...data, date: new Date(data.date).toISOString().split(".")[0] }))
+            .then(task => {task.date = formatDate(new Date(task.date)); setTaskObject(task)})
             .catch(errMsg => setError(<ErrorComponent message={errMsg} reset={() => {setError(null); getTaskById()}}/>))
         }
     }
 
-    useEffect(() => {
-        getTaskById()
-    },[])
+    useEffect(() => {getTaskById()}, [])
+
 
     return (
         error ? error :
@@ -102,7 +106,7 @@ export default function TaskForm({ params }) {
                 <div className={`${styles.formTaskDate} ${styles.formItem}`}>
                     <label className='flex-row'>
                         {formContent.dateLabel}
-                        <input type='datetime-local' name={'date'} defaultValue={taskObject.date}/>
+                        <input type='datetime-local' name={'date'} value={taskObject.date} onChange={ev => setTaskObject({...taskObject, date: ev.target.value})}/>
                     </label>
                 </div>
                 <input type='number' hidden name={'id'} defaultValue={taskObject.id}/>

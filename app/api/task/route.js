@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import SQLDBManager from "@/db/Manager/SQLDBManager.mjs"
 import { getMonthAndYearFromUrl, getTaskFromRequest, getIdFromRequest } from "@/utils/request/requestParser.mjs"
+import { revalidatePath } from "next/cache"
 
 /**
  * Get all tasks of a given month and year.

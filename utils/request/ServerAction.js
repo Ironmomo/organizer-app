@@ -102,21 +102,3 @@ export async function formAction(formData) {
     // redirect url to reload content
     redirect('/tasks/1')
 }
-
-
-/**
- * upcomingTasks Server Action
- *
- * Description:
- * Finds upcoming tasks ordered by date, with a default limit of 3 rows.
- *
- * @param {number} limit The maximum number of upcoming tasks to return.
- * @returns {Task[]} A list of Task objects.
- * @throws {DatabaseNoDataError} If no data has been found.
- * @throws {DatabaseError} If something went wrong with the database operation.
- */
-export async function upcomingTasks() {
-    // Get Data from db
-    const dbm = new SQLDBManager()
-    return dbm.findUpcomingTasks()
-}
