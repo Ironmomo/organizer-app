@@ -65,10 +65,27 @@ npm run start
 Open up [http://localhost:3000](http://localhost:3000) in your browser to see the result.
 
 ## About the Project
+The Webapp provides 4 different views: home, calender, tasks and a task form.
 
 ### Functionality
 
-### Implementation overview
+#### Calender-Page
+The calender-page provides a calender view to see the full month. The tasks can be drag and droped between the days and when clicking on a task a more detailed view of the task is shown 
+where it is also possible to delete a task or to change the time.
+
+Is a client side rendered page which uses the api route functionality of next.js to read, update and delete a task. 
+#### Tasks-Page
+The tasks-page provides a more detailed overview about all upcoming and past tasks. It is possible to search for tasks by filtering for task title or task description. There are buttons to update or delete a task or to create a new task.
+
+It is also a client side rendered page which uses fetch to read the tasks. Tasks are loaded by paging. 
+To delete a task server actions have been implemented.
+
+#### Task-Form
+The task form is used to create a new task or to update existing tasks.
+
+When updating a task it reads the task id from the search parameter. This id is used to fetch the respective task data from the api.
+
+Updating and creating a task uses server actions.
 
 ### Security concerns
 This project should only give a brief overlook about the way I structure a simple project and how I writte code. 
